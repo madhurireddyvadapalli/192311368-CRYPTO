@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int gcd(int a, int b) {
+    while (b) {
+        int temp = a % b;
+        a = b;
+        b = temp;
+    }
+    return a;
+}
+
+int main() {
+    char text[100];
+    int a, b;
+
+    printf("Enter plaintext (A-Z): ");
+    scanf("%s", text);
+    
+    printf("Enter key values a and b (a must be coprime with 26): ");
+    scanf("%d %d", &a, &b);
+
+    if (gcd(a, 26) != 1) {
+        printf("Invalid key: a must be coprime with 26.\n");
+        return 1;
+    }
+
+    printf("Encrypted text: ");
+    for (int i = 0; text[i]; i++) {
+        char ch = toupper(text[i]);
+        if (isalpha(ch)) {
+            int p = ch - 'A';
+            int c = (a * p + b) % 26;
+            printf("%c", c + 'A');
+        } else {
+            printf("%c", ch); 
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
