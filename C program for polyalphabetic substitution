@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char text[100], key[100];
+    int i, j, len;
+
+    printf("Enter plaintext: ");
+    scanf("%s", text);
+    printf("Enter key: ");
+    scanf("%s", key);
+
+    len = strlen(key);
+    printf("Encrypted text: ");
+
+    for (i = 0, j = 0; text[i]; i++) {
+        if (isalpha(text[i])) {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            char keyChar = tolower(key[j % len]) - 'a';
+            char encrypted = (text[i] - base + keyChar) % 26 + base;
+            printf("%c", encrypted);
+            j++;
+        } else {
+            printf("%c", text[i]); // Non-letter characters stay unchanged
+        }
+    }
+    printf("\n");
+    return 0;
+}
