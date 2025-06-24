@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    char ch;
+    int key;
+    printf("Enter key (1-25): ");
+    scanf("%d", &key);
+    printf("Enter message: ");
+    getchar(); // To consume leftover newline
+
+    while ((ch = getchar()) != '\n') {
+        if (ch >= 'a' && ch <= 'z')
+            ch = (ch - 'a' + key) % 26 + 'a';
+        else if (ch >= 'A' && ch <= 'Z')
+            ch = (ch - 'A' + key) % 26 + 'A';
+        putchar(ch);
+    }
+    printf("\n");
+    return 0;
+}
