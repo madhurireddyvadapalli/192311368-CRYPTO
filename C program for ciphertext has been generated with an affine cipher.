@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <ctype.h>
+
+// Modular inverse of a mod m
+int modInverse(int a, int m) {
+    for (int x = 1; x < m; x++)
+        if ((a * x) % m == 1) return x;
+    return -1;
+}
+
+int main() {
+    char cipher[] = "BUBUBUBU";  // Replace with actual ciphertext
+    int P1 = 4, P2 = 19;         // E=4, T=19
+    int C1 = 1, C2 = 20;         // B=1, U=20
+
+    int a = (C2 - C1) * modInverse(P2 - P1, 26) % 26;
+    if (a < 0) a += 26;
+    int b = (C1 - a * P1) % 26;
+    if (b < 0) b += 26;
+
+    int a_inv = modInverse(a, 26);
+
+    printf("Assumed mapping: B→E, U→T\n");
+    printf("Found keys: a = %d, b = %d\n", a, b);
+    printf("Decrypted text: ");
+
+    for (int i = 0; cipher[i]; i++) {
+        char ch = toupper(cipher[i]);
+        if (isalpha(ch)) {
+            int C = ch - 'A';
+            int P = (a_inv * (C - b + 26)) % 26;
+            printf("%c", P + 'A');
+        } else {
+            printf("%c", ch);
+        }
+    }
+
+    printf("\n");
+    return 0;
+}
