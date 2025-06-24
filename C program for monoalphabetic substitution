@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define SIZE 26
+#define MAX 1000
+
+int main() {
+    char plaintext[MAX], ciphertext[MAX];
+    
+    // Substitution key: each letter A-Z maps to a different letter (e.g., B -> X, A -> M, etc.)
+    char key[SIZE] = {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 
+                      'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z',
+                      'X', 'C', 'V', 'B', 'N', 'M'}; // Example mapping
+
+    printf("Enter the message (A-Z only): ");
+    fgets(plaintext, MAX, stdin);
+
+    for (int i = 0; i < strlen(plaintext); i++) {
+        char ch = plaintext[i];
+
+        if (isupper(ch)) {
+            ciphertext[i] = key[ch - 'A'];
+        } else if (islower(ch)) {
+            ciphertext[i] = tolower(key[ch - 'a']);
+        } else {
+            ciphertext[i] = ch; // keep non-alphabet characters unchanged
+        }
+    }
+
+    ciphertext[strlen(plaintext)] = '\0'; // Null-terminate the ciphertext
+
+    printf("Encrypted message: %s\n", ciphertext);
+
+    return 0;
+}
