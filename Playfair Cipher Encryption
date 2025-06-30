@@ -1,0 +1,44 @@
+// Add to the code above with:
+void encrypt_pair(char a, char b) {
+    int r1, c1, r2, c2;
+    find_position(a, &r1, &c1);
+    find_position(b, &r2, &c2);
+
+    if (r1 == r2) {
+        printf("%c%c", keySquare[r1][(c1 + 1) % 5], keySquare[r2][(c2 + 1) % 5]);
+    } else if (c1 == c2) {
+        printf("%c%c", keySquare[(r1 + 1) % 5][c1], keySquare[(r2 + 1) % 5][c2]);
+    } else {
+        printf("%c%c", keySquare[r1][c2], keySquare[r2][c1]);
+    }
+}
+
+void prepare_and_encrypt(char *plaintext) {
+    char prepared[200];
+    int k = 0;
+
+    for (int i = 0; plaintext[i]; i++) {
+        if (isalpha(plaintext[i])) {
+            char ch = toupper(plaintext[i]);
+            if (ch == 'J') ch = 'I';
+            prepared[k++] = ch;
+        }
+    }
+    prepared[k] = '\0';
+
+    for (int i = 0; i < k; i += 2) {
+        if (i + 1 == k || prepared[i] == prepared[i + 1]) {
+            encrypt_pair(prepared[i], 'X');
+            i--;
+        } else {
+            encrypt_pair(prepared[i], prepared[i + 1]);
+        }
+    }
+}
+
+int main() {
+    char plaintext[] = "Must see you over Cadogan West. Coming at once.";
+    prepare_and_encrypt(plaintext);
+    printf("\n");
+    return 0;
+}
