@@ -1,0 +1,10 @@
+#include <stdio.h>
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+
+int main() {
+    int n = 3599, m = 177;
+    int g = gcd(n, m);
+    if (g > 1) printf("Common factor found: %d\n", g);
+    else printf("No useful common factor.\n");
+    return 0;
+}
