@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <string.h>
+
+void pad(char *msg, int blockSize) {
+    int len = strlen(msg);
+    int padLen = blockSize - (len % blockSize);
+    msg[len] = 0x80; // 1-bit padding (10000000)
+    for (int i = 1; i < padLen; i++) msg[len + i] = 0x00;
+    msg[len + padLen] = '\0';
+}
+
+int main() {
+    char msg[64] = "HELLO";
+    pad(msg, 8);
+    printf("Padded message: ");
+    for (int i = 0; msg[i]; i++) printf("%02X ", msg[i]);
+    printf("\n");
+    return 0;
+}
