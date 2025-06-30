@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+void des_encrypt_block(unsigned char *block, unsigned char *key) {
+    for (int i = 0; i < 8; i++) block[i] ^= key[i]; // simulate
+}
+
+void des_decrypt_block(unsigned char *block, unsigned char *key) {
+    for (int i = 0; i < 8; i++) block[i] ^= key[i];
+}
+
+int main() {
+    unsigned char pt[8] = "DESDemo";
+    unsigned char key[8] = "MyKey!!";
+    unsigned char ct[8], dt[8];
+
+    memcpy(ct, pt, 8);
+    des_encrypt_block(ct, key);
+    des_decrypt_block(ct, key);
+    memcpy(dt, ct, 8);
+
+    printf("Decrypted: %s\n", dt);
+    return 0;
+}
