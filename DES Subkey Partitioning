@@ -1,0 +1,7 @@
+#include <stdio.h>
+
+int main() {
+    printf("DES: 56-bit key split into C (left 28 bits) and D (right 28 bits).\n");
+    printf("Subkey: first 24 from C, last 24 from D after shifting.\n");
+    return 0;
+}
