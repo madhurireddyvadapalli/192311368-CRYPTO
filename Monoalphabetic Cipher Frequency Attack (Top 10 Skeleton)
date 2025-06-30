@@ -1,0 +1,6 @@
+#include <stdio.h>
+int main() {
+    printf("Load ciphertext, count letter frequencies, match to ETAOIN SHRDLU.\n");
+    printf("Try top 10 mappings and show guesses.\n");
+    return 0;
+}
