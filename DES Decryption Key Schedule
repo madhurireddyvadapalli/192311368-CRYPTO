@@ -1,0 +1,7 @@
+#include <stdio.h>
+
+int main() {
+    printf("DES decryption uses subkeys K16 to K1.\n");
+    printf("Reverse the encryption key schedule.\n");
+    return 0;
+}
