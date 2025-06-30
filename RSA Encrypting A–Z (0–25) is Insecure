@@ -1,0 +1,7 @@
+#include <stdio.h>
+
+int main() {
+    printf("Insecure: Encrypting small values (0–25) using RSA enables brute-force attacks.\n");
+    printf("Attacker can encrypt all 26 values and build a lookup table to reverse messages.\n");
+    return 0;
+}
