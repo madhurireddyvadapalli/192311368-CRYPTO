@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <string.h>
+
+void otp_vigenere(char *pt, int *key, char *ct) {
+    for (int i = 0; pt[i]; i++) {
+        ct[i] = ((pt[i] - 'A') + key[i]) % 26 + 'A';
+    }
+    ct[strlen(pt)] = '\0';
+}
+
+int main() {
+    char pt[] = "HELLO";
+    int key[] = {3, 19, 5, 7, 1};
+    char ct[10];
+    otp_vigenere(pt, key, ct);
+    printf("Cipher: %s\n", ct);
+    return 0;
+}
