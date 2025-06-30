@@ -1,0 +1,51 @@
+#include <stdio.h>
+typedef unsigned char u8;
+typedef unsigned short u16;
+
+// Simulated S-DES using XOR with lower 8 bits of the key
+u8 sdes_encrypt(u8 b, u16 key) {
+    return b ^ (key & 0xFF);
+}
+
+u8 sdes_decrypt(u8 b, u16 key) {
+    return b ^ (key & 0xFF);
+}
+
+void cbc_encrypt(u8 *pt, u8 *ct, u8 iv, u16 key, int n) {
+    for (int i = 0; i < n; i++) {
+        pt[i] ^= iv;
+        ct[i] = sdes_encrypt(pt[i], key);
+        iv = ct[i];
+    }
+}
+
+void cbc_decrypt(u8 *ct, u8 *pt, u8 iv, u16 key, int n) {
+    for (int i = 0; i < n; i++) {
+        u8 tmp = sdes_decrypt(ct[i], key);
+        pt[i] = tmp ^ iv;
+        iv = ct[i];
+    }
+}
+
+void print_bytes(const char *label, u8 *data, int len) {
+    printf("%s: ", label);
+    for (int i = 0; i < len; i++) {
+        printf("%02X ", data[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    u8 plaintext[2] = {0x01, 0x23};   // 00000001 00100011
+    u8 ciphertext[2], decrypted[2];
+    u8 iv = 0xAA;                     // 10101010
+    u16 key = 0x0FD;                 // 0111111101 (S-DES key simulation)
+
+    cbc_encrypt(plaintext, ciphertext, iv, key, 2);
+    print_bytes("Ciphertext", ciphertext, 2);
+
+    cbc_decrypt(ciphertext, decrypted, iv, key, 2);
+    print_bytes("Decrypted", decrypted, 2);
+
+    return 0;
+}
