@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+void left_shift(u8 *k, int len) {
+    u8 carry = 0, next;
+    for (int i = len - 1; i >= 0; i--) {
+        next = (k[i] & 0x80) ? 1 : 0;
+        k[i] = (k[i] << 1) | carry;
+        carry = next;
+    }
+}
+
+void xor_constant(u8 *k, int len, int block_size) {
+    if (block_size == 128)
+        k[len - 1] ^= 0x87;
+    else if (block_size == 64)
+        k[len - 1] ^= 0x1B;
+}
+
+int main() {
+    u8 L[16] = {0}; L[0] = 0xF0;  // Simulated AES(0)
+    u8 K1[16], K2[16];
+    memcpy(K1, L, 16); left_shift(K1, 16); xor_constant(K1, 16, 128);
+    memcpy(K2, K1, 16); left_shift(K2, 16); xor_constant(K2, 16, 128);
+
+    printf("K1 = "); for (int i = 0; i < 16; i++) printf("%02X ", K1[i]);
+    printf("\nK2 = "); for (int i = 0; i < 16; i++) printf("%02X ", K2[i]);
+    return 0;
+}
