@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <string.h>
+
+#define B 8 // Block size
+
+// XOR-based encryption block (simulating block cipher)
+void xor_block(unsigned char *blk, unsigned char *key) {
+    for (int i = 0; i < B; i++) blk[i] ^= key[i];
+}
+
+// Pad with 0x80 followed by 0x00s
+void pad(unsigned char *data, int len) {
+    data[len] = 0x80;
+    for (int i = len + 1; i < B; i++) data[i] = 0x00;
+}
+
+// ECB mode
+void ECB(unsigned char *pt, unsigned char *key, int len) {
+    for (int i = 0; i < len; i += B) {
+        xor_block(&pt[i], key);
+    }
+}
+
+// CBC mode
+void CBC(unsigned char *pt, unsigned char *key, unsigned char *iv, int len) {
+    for (int i = 0; i < len; i += B) {
+        for (int j = 0; j < B; j++) pt[i + j] ^= iv[j];
+        xor_block(&pt[i], key);
+        memcpy(iv, &pt[i], B);
+    }
+}
+
+// CFB mode
+void CFB(unsigned char *pt, unsigned char *key, unsigned char *iv, int len) {
+    for (int i = 0; i < len; i += B) {
+        unsigned char temp[B];
+        memcpy(temp, iv, B);
+        xor_block(temp, key);
+        for (int j = 0; j < B; j++) {
+            iv[j] = pt[i + j] ^ temp[j];
+            pt[i + j] = iv[j];
+        }
+    }
+}
+
+// Utility to print data as hex
+void print_data(const char *label, unsigned char *data, int len) {
+    printf("%s: ", label);
+    for (int i = 0; i < len; i++) printf("%02X ", data[i]);
+    printf("\n");
+}
+
+int main() {
+    unsigned char pt[B] = "HELLO"; // Padded to 8 bytes
+    unsigned char key[B] = "MYSECRET";
+    unsigned char iv1[B] = "12345678";
+    unsigned char iv2[B] = "12345678";
+    unsigned char iv3[B] = "12345678";
+    unsigned char pt_ecb[B], pt_cbc[B], pt_cfb[B];
+
+    // Prepare padded input
+    memcpy(pt_ecb, pt, B);
+    memcpy(pt_cbc, pt, B);
+    memcpy(pt_cfb, pt, B);
+    pad(pt_ecb, strlen((char *)pt));
+    pad(pt_cbc, strlen((char *)pt));
+    pad(pt_cfb, strlen((char *)pt));
+
+    ECB(pt_ecb, key, B);
+    CBC(pt_cbc, key, iv1, B);
+    CFB(pt_cfb, key, iv2, B);
+
+    print_data("ECB Encrypted", pt_ecb, B);
+    print_data("CBC Encrypted", pt_cbc, B);
+    print_data("CFB Encrypted", pt_cfb, B);
+
+    return 0;
+}
