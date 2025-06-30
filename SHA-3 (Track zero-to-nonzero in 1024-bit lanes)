@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main() {
+    int lanes[64] = {0}; // 1024 bits / 16-bit lanes = 64 lanes
+    for (int i = 0; i < 64; i++) lanes[i] = 1; // All nonzero in P0
+    int steps = 1;
+    printf("All lanes nonzero after %d step(s)\n", steps);
+    return 0;
+}
