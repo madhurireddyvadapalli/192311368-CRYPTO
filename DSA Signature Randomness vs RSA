@@ -1,0 +1,8 @@
+#include <stdio.h>
+
+int main() {
+    printf("DSA uses random k → different signature each time for same message.\n");
+    printf("RSA: Signature is fixed for same message & key.\n");
+    printf("Hence, leaking 'k' in DSA leaks private key; randomness is essential.\n");
+    return 0;
+}
