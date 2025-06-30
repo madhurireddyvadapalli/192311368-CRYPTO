@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    // 25! = total permutations of 25 letters (I/J combined)
+    double log2_keys = 0;
+    for (int i = 1; i <= 25; i++) {
+        log2_keys += log2(i);
+    }
+
+    printf("Approximate number of keys: 2^%.0f\n", log2_keys);
+    printf("Effective keys (approx, accounting for symmetry): 2^74\n");
+    return 0;
+}
