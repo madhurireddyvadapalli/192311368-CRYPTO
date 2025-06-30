@@ -1,0 +1,6 @@
+#include <stdio.h>
+int main() {
+    printf("Given plaintext-ciphertext pairs, solve matrix equation to find key.\n");
+    printf("Requires matrix inversion mod 26.\n");
+    return 0;
+}
