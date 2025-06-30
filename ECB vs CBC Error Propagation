@@ -1,0 +1,7 @@
+#include <stdio.h>
+int main() {
+    printf("In CBC, error in C1 affects P1 and P2.\n");
+    printf("Beyond P2 unaffected unless chain is broken.\n");
+    printf("Error in P1 affects only C1.\n");
+    return 0;
+}
