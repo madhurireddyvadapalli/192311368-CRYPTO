@@ -1,0 +1,7 @@
+#include <stdio.h>
+int main() {
+    printf("CBC with 3DES is more secure than DES.\n");
+    printf("3DES uses EDE (Encrypt-Decrypt-Encrypt).\n");
+    printf("Use for security. Use DES if speed is critical.\n");
+    return 0;
+}
