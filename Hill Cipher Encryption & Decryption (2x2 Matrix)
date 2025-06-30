@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+void hillEncrypt(char *msg, int key[2][2]) {
+    printf("Encrypted: ");
+    for (int i = 0; msg[i] && msg[i+1]; i += 2) {
+        int x = msg[i] - 'a';
+        int y = msg[i+1] - 'a';
+        char c1 = (key[0][0]*x + key[0][1]*y) % 26 + 'a';
+        char c2 = (key[1][0]*x + key[1][1]*y) % 26 + 'a';
+        printf("%c%c", c1, c2);
+    }
+}
+
+int main() {
+    int key[2][2] = {{9,4},{5,7}};
+    char msg[] = "meetmeattheusualplaceattenratherthaneightoclock";
+    hillEncrypt(msg, key);
+    return 0;
+}
