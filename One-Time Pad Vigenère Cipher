@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    char pt[] = "sendmoremoney";
+    int key[] = {9,0,1,7,23,15,21,14,11,11,2,8,9};
+    printf("Cipher: ");
+    for (int i = 0; pt[i]; i++) {
+        char c = ((pt[i] - 'a') + key[i]) % 26 + 'a';
+        printf("%c", c);
+    }
+    return 0;
+}
