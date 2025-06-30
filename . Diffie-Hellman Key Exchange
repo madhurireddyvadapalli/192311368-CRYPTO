@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int modexp(int base, int exp, int mod) {
+    int res = 1;
+    while (exp > 0) {
+        if (exp % 2) res = (res * base) % mod;
+        base = (base * base) % mod;
+        exp /= 2;
+    }
+    return res;
+}
+
+int main() {
+    int a = 5, q = 23, x = 6, y = 15;
+    int A = modexp(a, x, q);  // Alice sends A = a^x mod q
+    int B = modexp(a, y, q);  // Bob sends B = a^y mod q
+    int k1 = modexp(B, x, q); // Alice computes key
+    int k2 = modexp(A, y, q); // Bob computes key
+    printf("Shared key: %d = %d\n", k1, k2);
+
+    printf("If users sent 'x*a' instead of 'a^x', Eve can directly compute key. Not secure.\n");
+    return 0;
+}
