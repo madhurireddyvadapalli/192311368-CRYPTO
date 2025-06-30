@@ -1,0 +1,7 @@
+#include <stdio.h>
+
+int main() {
+    printf("If Bob leaks private key 'd', reusing the same modulus 'n' is NOT safe.\n");
+    printf("Anyone can factor n using leaked d, making any new key pair insecure.\n");
+    return 0;
+}
